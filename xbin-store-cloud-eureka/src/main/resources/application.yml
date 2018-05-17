@@ -1,5 +1,5 @@
 server:
-  port: ${port:8501}
+  port: ${port:@xbin-store-cloud-eureka.server.port@}
 
 spring:
   application:
@@ -8,6 +8,6 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${eureka.serviceUrl:http://127.0.0.1:8501/eureka/}
+      defaultZone: ${eureka.serviceUrl:@eureka.client.serviceUrl.defaultZone@}
   instance:
-    hostname: ${hostname:eureka}
+    hostname: ${hostname:xbin-store-cloud-eureka}

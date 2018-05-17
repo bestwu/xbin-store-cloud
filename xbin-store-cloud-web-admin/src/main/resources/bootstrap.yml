@@ -5,7 +5,7 @@ spring:
 security.basic.enabled: false
 
 server:
-  port: ${web.server.port:8100}
+  port: ${web.server.port:@xbin-store-cloud-web-admin.server.port@}
 
 management:
   security:
@@ -16,7 +16,7 @@ eureka:
     status-page-url: http://localhost:${server.port}/swagger-ui.html # ${server.port}为该服务的端口号
   client:
     serviceUrl:
-      defaultZone: ${eureka.serviceUrl:http://127.0.0.1:8503/eureka/}
+      defaultZone: ${eureka.serviceUrl:@eureka.client.serviceUrl.defaultZone@}
 
 feign:
   hystrix:

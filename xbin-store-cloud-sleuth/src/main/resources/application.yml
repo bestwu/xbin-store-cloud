@@ -1,2 +1,2 @@
 server:
-  port: ${port:8504}
+  port: ${port:@xbin-store-cloud-sleuth.server.port@}

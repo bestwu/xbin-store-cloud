@@ -3,29 +3,12 @@ spring:
     name: admin-dashboard
 
 server:
-  port: ${port:8505}
+  port: ${port:@xbin-store-cloud-admin.server.port@}
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${eureka.serviceUrl:http://127.0.0.1:8501/eureka/}
-  instance:
-    hostname: ${hostname:admin}
-    prefer-ip-address: true
-
----
-spring:
-  profiles: docker
-  application:
-    name: admin-dashboard
-
-server:
-  port: ${port:8505}
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${eureka.serviceUrl:http://127.0.0.1:8501/eureka/}
+      defaultZone: ${eureka.serviceUrl:@eureka.client.serviceUrl.defaultZone@}
   instance:
     hostname: ${hostname:admin}
     prefer-ip-address: true

@@ -1,10 +1,10 @@
 server:
-  port: ${port:8502}
+  port: ${port:@xbin-store-cloud-config.server.port@}
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${eureka.serviceUrl:http://127.0.0.1:8503/eureka/}
+      defaultZone: ${eureka.serviceUrl:@eureka.client.serviceUrl.defaultZone@}
 
 spring:
   application:
@@ -14,7 +14,7 @@ spring:
       label: master
       server:
         git:
-          uri: ${git.uri:http://admin@localhost:8078/r/config-server.git}
-          username: ${git.username:admin}
-          password: ${git.password:admin}
+          uri: ${git.uri:@spring.cloud.config.uri@}
+          username: ${git.username:@spring.cloud.config.username@}
+          password: ${git.password:@spring.cloud.config.password@}
           search-paths: ${git.paths:*}

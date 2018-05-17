@@ -10,15 +10,15 @@ spring:
         service-id: config-server
       name: xbin-store-cloud-turbine
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: @spring.rabbitmq.host@
+    port: @spring.rabbitmq.port@
+    username: @spring.rabbitmq.username@
+    password: @spring.rabbitmq.password@
 
 security.basic.enabled: false
 
 server:
-  port: ${port:8507}
+  port: ${port:@xbin-store-cloud-turbine.server.port@}
 
 management:
   security:
@@ -29,7 +29,7 @@ eureka:
     status-page-url: http://localhost:${server.port}/hystrix
   client:
     serviceUrl:
-      defaultZone: ${eureka.serviceUrl:http://127.0.0.1:8503/eureka/}
+      defaultZone: ${eureka.serviceUrl:@eureka.client.serviceUrl.defaultZone@}
 
 turbine:
   aggregator:

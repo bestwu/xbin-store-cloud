@@ -1,0 +1,79 @@
+version: '2'
+services:
+  demo-db:
+    hostname: "cloud-mysql"
+    container_name: "cloud-mysql"
+    image: mysql:5
+#    ports:
+#      - 3306:3306
+    volumes:
+#      - ./data:/var/lib/mysql
+#      - /etc/localtime:/etc/localtime:ro
+      - ../xbin_store.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_DATABASE=demo
+      - MYSQL_ROOT_PASSWORD=root
+    command: --character-set-server=utf8 --collation-server=utf8_unicode_ci  --sql-mode="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"
+  rabbitmq:
+    hostname: "cloud-mq"
+    container_name: "cloud-mq"
+    image: rabbitmq:management-alpine
+    networks:
+      - cloud
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+    environment:
+      - TZ=Asia/Shanghai
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=123456
+  tracker:
+    hostname: cloud-fdfs-tracker
+    container_name: cloud-fdfs-tracker
+    image: luhuiguo/fastdfs
+    command: tracker
+    networks:
+      - cloud
+    ports:
+      - "22122:22122"
+#    volumes:
+#      - ./fdfs/tracker:/var/fdfs
+  storage0:
+    hostname: cloud-fdfs-storage0
+    container_name: cloud-fdfs-storage0
+    image: luhuiguo/fastdfs
+    command: storage
+    networks:
+      - cloud
+    ports:
+      - "23000:23000"
+    environment:
+      - TRACKER_SERVER=cloud-fdfs-tracker:22122
+#    volumes:
+#      - ./fdfs/storage0:/var/fdfs
+  redis:
+    hostname: cloud-redis
+    container_name: cloud-redis
+    image: redis:alpine
+    command: --requirepass 123456
+    networks:
+      - cloud
+#    ports:
+#      - "6379:6379"
+  solr:
+    hostname: cloud-solr
+    container_name: cloud-solr
+    image: solr:alpine
+    networks:
+      - cloud
+#    ports:
+#     - "8983:8983"
+#    volumes:
+#      - data:/opt/solr/server/solr/mycores
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - mycore
+networks:
+  cloud:
